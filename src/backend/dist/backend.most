@@ -1,0 +1,44 @@
+// Version: 1.0.0
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type HospitalAdminStatus__295059780 = {#Active; #Inactive; #Suspended};
+type HospitalAdmin__54513740 =
+  {
+    email : Text;
+    hospitalId : Text;
+    id : Text;
+    name : Text;
+    status : HospitalAdminStatus__295059780;
+    username : Text
+  };
+type HospitalStatus__688476393 = {#Active; #Inactive};
+type Hospital__713099432 =
+  {
+    address : Text;
+    contact : Text;
+    createdAt : Int;
+    id : Text;
+    logoUri : Text;
+    name : Text;
+    status : HospitalStatus__688476393
+  };
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+actor {
+  stable admins :
+    {
+      var root : Node__46230540<Text, HospitalAdmin__54513740>;
+      var size : Nat__490723111
+    };
+  stable hospitals :
+    {
+      var root : Node__46230540<Text, Hospital__713099432>;
+      var size : Nat__490723111
+    };
+  stable superAdmin : {passwordHash : Text; username : Text}
+};

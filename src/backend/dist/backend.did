@@ -1,0 +1,43 @@
+type HospitalStatus = 
+ variant {
+   Active;
+   Inactive;
+ };
+type HospitalAdminStatus = 
+ variant {
+   Active;
+   Inactive;
+   Suspended;
+ };
+type HospitalAdmin = 
+ record {
+   email: text;
+   hospitalId: text;
+   id: text;
+   name: text;
+   status: HospitalAdminStatus;
+   username: text;
+ };
+type Hospital = 
+ record {
+   address: text;
+   contact: text;
+   createdAt: int;
+   id: text;
+   logoUri: text;
+   name: text;
+   status: HospitalStatus;
+ };
+service : {
+  create_hospital: (name: text, address: text, contact: text) -> (Hospital);
+  create_hospital_admin: (hospitalId: text, username: text, name: text,
+   email: text) -> (HospitalAdmin);
+  get_hospital_admins: (hospitalId: text) -> (vec HospitalAdmin) query;
+  get_hospital_by_id: (id: text) -> (opt Hospital) query;
+  get_hospitals: () -> (vec Hospital) query;
+  update_hospital: (id: text, name: text, address: text, contact: text,
+   status: HospitalStatus) -> (opt Hospital);
+  update_hospital_admin_status: (id: text, status: HospitalAdminStatus) ->
+   (opt HospitalAdmin);
+  verify_super_admin: (username: text, password: text) -> (bool);
+}
